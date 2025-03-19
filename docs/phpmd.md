@@ -1,0 +1,105 @@
+# PHP CodeSniffer (PHPCS)
+
+## 1. Что такое PHPCS?
+PHP CodeSniffer (PHPCS) – это инструмент для анализа кода на соответствие стандартам кодирования. Он помогает автоматизировать проверку стиля кода и поддерживать единообразие в проектах.
+
+## 2. Для чего нужен PHPCS?
+PHPCS используется для:
+- Обеспечения соблюдения стандартов кодирования (PSR-1, PSR-12, Symfony, Laravel и т. д.).
+- Выявления потенциальных проблем с форматированием кода.
+- Автоматического исправления некоторых нарушений кодстайла.
+- Поддержания чистоты кода в команде, особенно в больших проектах.
+
+## 3. Установка и настройка
+PHPCS можно установить через Composer:
+```bash
+composer require --dev squizlabs/php_codesniffer
+```
+После установки можно проверить версию:
+```bash
+vendor/bin/phpcs --version
+```
+
+## 4. Выбор правил кодирования
+PHPCS поддерживает различные стандарты кодирования. Чтобы выбрать нужный стандарт, используйте команду:
+```bash
+vendor/bin/phpcs --standard=PSR12 src/
+```
+Доступные стандарты можно посмотреть командой:
+```bash
+vendor/bin/phpcs -i
+```
+Если требуется использовать несколько стандартов одновременно, можно указать их через запятую:
+```bash
+vendor/bin/phpcs --standard=PSR12,Squiz src/
+```
+
+## 5. Разработка собственных стандартов кодирования
+Можно создать кастомные правила, если существующих стандартов недостаточно. Для этого:
+1. Создайте каталог, например, `CustomStandard` внутри `phpcs`.
+2. В этом каталоге создайте файл `ruleset.xml` с содержимым:
+```xml
+<?xml version="1.0"?>
+<ruleset name="CustomStandard">
+    <description>Мой кастомный стандарт кодирования</description>
+    <rule ref="PSR12"/>
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+</ruleset>
+```
+3. Запустите PHPCS с новым стандартом:
+```bash
+vendor/bin/phpcs --standard=CustomStandard src/
+```
+
+## 6. Использование в PhpStorm
+### 6.1. Настройка PHPCS в PhpStorm
+1. Открыть **Preferences** (*⌘ + ,* на macOS, *Ctrl + Alt + S* на Windows/Linux).
+2. Перейти в **Languages & Frameworks → PHP → Quality Tools**.
+3. В разделе **PHP_CodeSniffer** указать путь к бинарному файлу PHPCS (`vendor/bin/phpcs`).
+4. В **Coding Standard** выбрать нужный стандарт (например, PSR-12 или кастомный).
+5. Нажать **Apply** и **OK**.
+
+### 6.2. Проверка кода в PhpStorm
+1. Открыть файл PHP.
+2. Включить **Code Inspections** (включены по умолчанию).
+3. Ошибки кодстайла будут подсвечены в редакторе.
+
+## 7. Использование в GitHub Actions
+PHPCS можно запускать автоматически при каждом коммите.
+
+### 7.1. Пример конфигурации GitHub Actions
+Создадим файл `.github/workflows/phpcs.yml`:
+```yaml
+name: PHPCS
+
+on: [push, pull_request]
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer
+      
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+      
+      - name: Run PHPCS
+        run: vendor/bin/phpcs --standard=PSR12 src/
+```
+Этот workflow будет автоматически проверять код на соответствие стандарту PSR-12 при каждом пуше или pull request.
+
+## 8. Автоисправление кода (PHPCBF)
+Для автоматического исправления стиля кода можно использовать `phpcbf`:
+```bash
+vendor/bin/phpcbf src/
+```
+
+## 9. Заключение
+PHPCS – это мощный инструмент для поддержания стандартизированного кодстайла в PHP-проектах. Он интегрируется с IDE и CI/CD, упрощая контроль качества кода. Важно включать его в процесс разработки, чтобы избегать хаотичного кода и поддерживать единообразие в команде.
