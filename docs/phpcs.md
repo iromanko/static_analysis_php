@@ -41,7 +41,7 @@ vendor/bin/phpcs --standard=PSR12,Squiz src/
 ```xml
 <?xml version="1.0"?>
 <ruleset name="CustomStandard">
-    <description>Мой кастомный стандарт кодирования</description>
+    <description>My Custom Coding Standard</description>
     <rule ref="PSR12"/>
     <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
 </ruleset>
@@ -84,14 +84,14 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.3'
           tools: composer
       
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
       
       - name: Run PHPCS
-        run: vendor/bin/phpcs --standard=PSR12 src/
+        run: vendor/bin/phpcs src/phpmd
 ```
 Этот workflow будет автоматически проверять код на соответствие стандарту PSR-12 при каждом пуше или pull request.
 

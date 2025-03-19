@@ -8,3 +8,6 @@ up:
 
 down:
 	@docker compose down --volumes
+
+phpcs:
+	@docker compose run --rm php vendor/bin/phpcs /app/src/phpcs/
