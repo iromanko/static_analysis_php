@@ -11,3 +11,6 @@ down:
 
 phpcs:
 	@docker compose run --rm php vendor/bin/phpcs /app/src/phpcs/
+
+phpcbf:
+	@docker compose run --rm php vendor/bin/phpcbf /app/src/phpcs/
