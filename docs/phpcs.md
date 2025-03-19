@@ -68,31 +68,8 @@ vendor/bin/phpcs --standard=CustomStandard src/
 PHPCS можно запускать автоматически при каждом коммите.
 
 ### 7.1. Пример конфигурации GitHub Actions
-Создадим файл `.github/workflows/phpcs.yml`:
-```yaml
-name: PHPCS
+Создадим файл [.github/workflows/phpcs.yaml](../.github/workflows/phpcs.yaml)
 
-on: [push, pull_request]
-
-jobs:
-  phpcs:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          tools: composer
-      
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
-      
-      - name: Run PHPCS
-        run: vendor/bin/phpcs src/phpmd
-```
 Этот workflow будет автоматически проверять код на соответствие стандарту PSR-12 при каждом пуше или pull request.
 
 ## 8. Автоисправление кода (PHPCBF)
