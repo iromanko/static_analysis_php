@@ -1,105 +1,126 @@
-# PHP CodeSniffer (PHPCS)
+# PHP Mess Detector (PHPMD)
 
-## 1. Что такое PHPCS?
-PHP CodeSniffer (PHPCS) – это инструмент для анализа кода на соответствие стандартам кодирования. Он помогает автоматизировать проверку стиля кода и поддерживать единообразие в проектах.
+## 1. Что такое PHPMD?
+PHP Mess Detector (PHPMD) – это инструмент статического анализа кода, предназначенный для выявления потенциальных проблем в коде. Он помогает находить сложные, запутанные или небезопасные участки кода, которые могут привести к проблемам в поддержке и развитии проекта.
 
-## 2. Для чего нужен PHPCS?
-PHPCS используется для:
-- Обеспечения соблюдения стандартов кодирования (PSR-1, PSR-12, Symfony, Laravel и т. д.).
-- Выявления потенциальных проблем с форматированием кода.
-- Автоматического исправления некоторых нарушений кодстайла.
-- Поддержания чистоты кода в команде, особенно в больших проектах.
+## 2. Для чего нужен PHPMD?
+PHPMD используется для:
+- Поиска длинных и сложных методов.
+- Выявления избыточности кода.
+- Обнаружения нарушений принципов проектирования.
+- Поиска потенциальных ошибок (например, неиспользуемых переменных).
+- Улучшения читаемости и поддержки кода.
 
 ## 3. Установка и настройка
-PHPCS можно установить через Composer:
+PHPMD можно установить через Composer:
 ```bash
-composer require --dev squizlabs/php_codesniffer
+composer require --dev phpmd/phpmd
 ```
 После установки можно проверить версию:
 ```bash
-vendor/bin/phpcs --version
+vendor/bin/phpmd --version
 ```
 
-## 4. Выбор правил кодирования
-PHPCS поддерживает различные стандарты кодирования. Чтобы выбрать нужный стандарт, используйте команду:
-```bash
-vendor/bin/phpcs --standard=PSR12 src/
-```
-Доступные стандарты можно посмотреть командой:
-```bash
-vendor/bin/phpcs -i
-```
-Если требуется использовать несколько стандартов одновременно, можно указать их через запятую:
-```bash
-vendor/bin/phpcs --standard=PSR12,Squiz src/
-```
-
-## 5. Разработка собственных стандартов кодирования
-Можно создать кастомные правила, если существующих стандартов недостаточно. Для этого:
-1. Создайте каталог, например, `CustomStandard` внутри `phpcs`.
-2. В этом каталоге создайте файл `ruleset.xml` с содержимым:
-```xml
-<?xml version="1.0"?>
-<ruleset name="CustomStandard">
-    <description>Мой кастомный стандарт кодирования</description>
-    <rule ref="PSR12"/>
-    <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
-</ruleset>
-```
-3. Запустите PHPCS с новым стандартом:
-```bash
-vendor/bin/phpcs --standard=CustomStandard src/
-```
-
-## 6. Использование в PhpStorm
-### 6.1. Настройка PHPCS в PhpStorm
+## 4. Использование в PhpStorm
+### 4.1. Настройка PHPMD в PhpStorm
 1. Открыть **Preferences** (*⌘ + ,* на macOS, *Ctrl + Alt + S* на Windows/Linux).
 2. Перейти в **Languages & Frameworks → PHP → Quality Tools**.
-3. В разделе **PHP_CodeSniffer** указать путь к бинарному файлу PHPCS (`vendor/bin/phpcs`).
-4. В **Coding Standard** выбрать нужный стандарт (например, PSR-12 или кастомный).
+3. В разделе **PHP Mess Detector** указать путь к бинарному файлу PHPMD (`vendor/bin/phpmd`).
+4. В **Ruleset** выбрать стандартные правила или указать кастомные.
 5. Нажать **Apply** и **OK**.
 
-### 6.2. Проверка кода в PhpStorm
+### 4.2. Проверка кода в PhpStorm
 1. Открыть файл PHP.
-2. Включить **Code Inspections** (включены по умолчанию).
-3. Ошибки кодстайла будут подсвечены в редакторе.
+2. Включить **Code Inspections**.
+3. Проблемные участки кода будут подсвечены в редакторе.
 
-## 7. Использование в GitHub Actions
-PHPCS можно запускать автоматически при каждом коммите.
+## 5. Использование в GitHub Actions
+PHPMD можно запускать автоматически при каждом коммите.
 
-### 7.1. Пример конфигурации GitHub Actions
-Создадим файл `.github/workflows/phpcs.yml`:
-```yaml
-name: PHPCS
+### 5.1. Пример конфигурации GitHub Actions
+Создадим файл [.github/workflows/phpmd.yaml`](../.github/workflows/phpmd.yaml).
 
-on: [push, pull_request]
+Этот workflow анализирует код, используя три набора правил: **cleancode**, **codesize** и **unusedcode**.
 
-jobs:
-  phpcs:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          tools: composer
-      
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
-      
-      - name: Run PHPCS
-        run: vendor/bin/phpcs --standard=PSR12 src/
+## 6. Основные правила PHPMD
+PHPMD включает несколько наборов правил:
+
+### 6.1. Clean Code
+- **BooleanArgumentFlag** – метод не должен принимать булевый аргумент.
+- **StaticAccess** – статический доступ к методам и свойствам нежелателен.
+- **DuplicatedArrayKey** – дублирование ключей массива.
+
+### 6.2. Codesize
+- **CyclomaticComplexity** – измеряет сложность кода.
+- **ExcessiveClassLength** – слишком длинные классы.
+- **ExcessiveMethodLength** – слишком длинные методы.
+- **TooManyFields** – слишком много свойств в классе.
+- **TooManyMethods** – слишком много методов в классе.
+
+### 6.3. Controversial
+- **CamelCaseClassName** – проверяет соответствие имен классов стилю CamelCase.
+- **Superglobals** – ограничение использования суперглобальных переменных ($_GET, $_POST и др.).
+
+### 6.4. Design
+- **CouplingBetweenObjects** – высокий уровень связности между классами.
+- **DepthOfInheritance** – слишком глубокое наследование.
+- **GotoStatement** – использование `goto` недопустимо.
+
+### 6.5. Naming
+- **ShortVariable** – слишком короткие имена переменных.
+- **ShortMethodName** – слишком короткие имена методов.
+- **LongVariable** – слишком длинные имена переменных.
+
+### 6.6. Unused Code
+- **UnusedPrivateMethod** – неиспользуемые приватные методы.
+- **UnusedLocalVariable** – неиспользуемые локальные переменные.
+- **UnusedFormalParameter** – неиспользуемые параметры методов.
+
+## 7. Создание собственных правил
+PHPMD позволяет создавать кастомные правила для анализа кода. Для этого:
+1. Создайте файл `custom-ruleset.xml`:
+```xml
+<?xml version="1.0"?>
+<ruleset name="CustomRules">
+    <description>Кастомные правила PHPMD</description>
+    <rule ref="rulesets/cleancode.xml"/>
+    <rule ref="rulesets/codesize.xml"/>
+    <rule ref="rulesets/unusedcode.xml"/>
+</ruleset>
 ```
-Этот workflow будет автоматически проверять код на соответствие стандарту PSR-12 при каждом пуше или pull request.
-
-## 8. Автоисправление кода (PHPCBF)
-Для автоматического исправления стиля кода можно использовать `phpcbf`:
+2. Запустите PHPMD с новым набором правил:
 ```bash
-vendor/bin/phpcbf src/
+vendor/bin/phpmd src/ text custom-ruleset.xml
+```
+
+## 8. Подавление (Suppress) предупреждений PHPMD
+Иногда может потребоваться подавить определенные предупреждения PHPMD. Это можно сделать с помощью аннотаций в коде:
+
+### 8.1. Подавление предупреждений для метода или класса
+```php
+/**
+ * @SuppressWarnings("CyclomaticComplexity")
+ */
+function complexFunction($a, $b, $c, $d, $e) {
+    // сложная логика
+}
+```
+
+### 8.2. Подавление нескольких правил
+```php
+/**
+ * @SuppressWarnings({"CyclomaticComplexity", "ExcessiveMethodLength"})
+ */
+function anotherComplexFunction() {
+    // код
+}
+```
+
+### 8.3. Подавление предупреждений в конфигурации
+Можно исключить определенные файлы или директории в конфигурационном файле `phpmd.xml`:
+```xml
+<exclude-pattern>*/tests/*</exclude-pattern>
 ```
 
 ## 9. Заключение
-PHPCS – это мощный инструмент для поддержания стандартизированного кодстайла в PHP-проектах. Он интегрируется с IDE и CI/CD, упрощая контроль качества кода. Важно включать его в процесс разработки, чтобы избегать хаотичного кода и поддерживать единообразие в команде.
+PHPMD – это мощный инструмент для выявления потенциальных проблем в коде. Он помогает соблюдать чистоту кода, избегать избыточности и следовать лучшим практикам проектирования. Интеграция с IDE и CI/CD позволяет легко внедрять автоматизированный анализ качества кода в рабочий процесс. Возможность подавления предупреждений делает его гибким инструментом, который можно адаптировать под потребности проекта.

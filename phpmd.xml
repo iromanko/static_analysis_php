@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<ruleset name="Custom ruleset">
+    <rule ref="rulesets/codesize.xml"/>
+    <rule ref="rulesets/unusedcode.xml"/>
+</ruleset>

@@ -15,7 +15,8 @@
     ],
     "minimum-stability": "dev",
     "require-dev": {
-        "squizlabs/php_codesniffer": "4.0.x-dev"
+        "squizlabs/php_codesniffer": "4.0.x-dev",
+        "phpmd/phpmd": "dev-master"
     },
     "require": {
         "php": "^8.3"

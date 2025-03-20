@@ -1,4 +1,4 @@
-.PHONY: up down
+.PHONY: build up down phpcs phpcbf phpmd
 
 build:
 	@docker compose build
@@ -14,3 +14,6 @@ phpcs:
 
 phpcbf:
 	@docker compose run --rm php vendor/bin/phpcbf /app/src/phpcs/
+
+phpmd:
+	@docker compose run --rm php vendor/bin/phpmd /app/src/phpmd text /app/phpmd.xml
