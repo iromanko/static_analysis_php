@@ -1,0 +1,84 @@
+name: PHP Quality Checks
+
+on:
+  pull_request:
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get target branch
+        run: echo "TARGET_BRANCH=${{ github.event.pull_request.base.ref }}" >> $GITHUB_ENV
+
+      - name: Get changed PHP files
+        run: |
+          git fetch origin $TARGET_BRANCH
+          CHANGED_FILES=$(git diff --name-only origin/$TARGET_BRANCH HEAD -- '*.php' | xargs)
+          echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
+          echo $CHANGED_FILES
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Run PHPCS on changed files
+        if: env.CHANGED_FILES != ''
+        run: vendor/bin/phpcs $CHANGED_FILES
+
+  phpmd:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get target branch
+        run: echo "TARGET_BRANCH=${{ github.event.pull_request.base.ref }}" >> $GITHUB_ENV
+
+      - name: Get changed PHP files
+        run: |
+          git fetch origin $TARGET_BRANCH
+          CHANGED_FILES=$(git diff --name-only origin/$TARGET_BRANCH HEAD -- '*.php' | xargs)
+          echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
+          echo $CHANGED_FILES
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Run PHPMD on changed files
+        if: env.CHANGED_FILES != ''
+        run: vendor/bin/phpmd $CHANGED_FILES text phpmd.xml
+
+  psalm:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Run Psalm
+        run: vendor/bin/psalm --no-progress --output-format=compact --show-info=
