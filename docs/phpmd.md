@@ -82,7 +82,7 @@ PHPMD позволяет создавать кастомные правила д
 ```xml
 <?xml version="1.0"?>
 <ruleset name="CustomRules">
-    <description>Кастомные правила PHPMD</description>
+    <description>Custom PHPMD rules</description>
     <rule ref="rulesets/cleancode.xml"/>
     <rule ref="rulesets/codesize.xml"/>
     <rule ref="rulesets/unusedcode.xml"/>
