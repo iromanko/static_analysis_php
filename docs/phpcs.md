@@ -54,7 +54,7 @@ vendor/bin/phpcs --standard=CustomStandard src/
 ## 6. Использование в PhpStorm
 ### 6.1. Настройка PHPCS в PhpStorm
 1. Открыть **Preferences** (*⌘ + ,* на macOS, *Ctrl + Alt + S* на Windows/Linux).
-2. Перейти в **Languages & Frameworks → PHP → Quality Tools**.
+2. Перейти в **PHP → Quality Tools**.
 3. В разделе **PHP_CodeSniffer** указать путь к бинарному файлу PHPCS (`vendor/bin/phpcs`).
 4. В **Coding Standard** выбрать нужный стандарт (например, PSR-12 или кастомный).
 5. Нажать **Apply** и **OK**.

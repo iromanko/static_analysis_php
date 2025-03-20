@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="dev-master@55eda49c34e76697200ace1fa462f32d12e0441c">
+  <file src="src/phpcs/bad/MyClass.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[my_class]]></code>
+    </ClassMustBeFinal>
+    <MissingReturnType>
+      <code><![CDATA[testFunction]]></code>
+    </MissingReturnType>
+    <UnusedClass>
+      <code><![CDATA[my_class]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/phpcs/good/MyClass.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[MyClass]]></code>
+    </ClassMustBeFinal>
+    <MissingReturnType>
+      <code><![CDATA[testFunction]]></code>
+    </MissingReturnType>
+    <UnusedClass>
+      <code><![CDATA[MyClass]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/phpmd/bad/BadClass.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[BadClass]]></code>
+    </ClassMustBeFinal>
+    <LoopInvalidation>
+      <code><![CDATA[$i]]></code>
+      <code><![CDATA[$i]]></code>
+      <code><![CDATA[$i]]></code>
+      <code><![CDATA[$i]]></code>
+    </LoopInvalidation>
+    <MissingPropertyType>
+      <code><![CDATA[$unusedVariable]]></code>
+    </MissingPropertyType>
+    <UnusedClass>
+      <code><![CDATA[BadClass]]></code>
+    </UnusedClass>
+  </file>
+</files>

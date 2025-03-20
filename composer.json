@@ -16,7 +16,8 @@
     "minimum-stability": "dev",
     "require-dev": {
         "squizlabs/php_codesniffer": "4.0.x-dev",
-        "phpmd/phpmd": "dev-master"
+        "phpmd/phpmd": "dev-master",
+        "vimeo/psalm": "^7.0@dev"
     },
     "require": {
         "php": "^8.3"

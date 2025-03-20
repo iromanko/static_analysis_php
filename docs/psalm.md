@@ -24,7 +24,7 @@ vendor/bin/psalm --init
 ## 4. Использование в PhpStorm
 ### 4.1. Настройка Psalm в PhpStorm
 1. Открыть **Preferences** (*⌘ + ,* на macOS, *Ctrl + Alt + S* на Windows/Linux).
-2. Перейти в **Languages & Frameworks → PHP → Quality Tools**.
+2. Перейти в **PHP → Quality Tools**.
 3. В разделе **Psalm** указать путь к бинарному файлу (`vendor/bin/psalm`).
 4. Указать путь к конфигурационному файлу (`psalm.xml`).
 5. Нажать **Apply** и **OK**.
@@ -38,31 +38,8 @@ vendor/bin/psalm --init
 Psalm можно запускать в CI/CD для автоматического анализа кода.
 
 ### 5.1. Пример конфигурации GitHub Actions
-Создадим файл `.github/workflows/psalm.yml`:
-```yaml
-name: Psalm
+Создадим файл [.github/workflows/psalm.yaml](../.github/workflows/psalm.yaml).
 
-on: [push, pull_request]
-
-jobs:
-  psalm:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          tools: composer
-      
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
-      
-      - name: Run Psalm
-        run: vendor/bin/psalm
-```
 Этот workflow автоматически проверяет код при каждом коммите или Pull Request.
 
 ## 6. Error Level

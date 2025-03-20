@@ -1,0 +1,22 @@
+name: Psalm
+
+on: [push, pull_request]
+
+jobs:
+  psalm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run Psalm
+        run: vendor/bin/psalm --no-progress --output-format=compact --show-info=false

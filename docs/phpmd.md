@@ -24,7 +24,7 @@ vendor/bin/phpmd --version
 ## 4. Использование в PhpStorm
 ### 4.1. Настройка PHPMD в PhpStorm
 1. Открыть **Preferences** (*⌘ + ,* на macOS, *Ctrl + Alt + S* на Windows/Linux).
-2. Перейти в **Languages & Frameworks → PHP → Quality Tools**.
+2. Перейти в **PHP → Quality Tools**.
 3. В разделе **PHP Mess Detector** указать путь к бинарному файлу PHPMD (`vendor/bin/phpmd`).
 4. В **Ruleset** выбрать стандартные правила или указать кастомные.
 5. Нажать **Apply** и **OK**.

@@ -1,4 +1,4 @@
-.PHONY: build up down phpcs phpcbf phpmd
+.PHONY: build up down phpcs phpcbf phpmd psalm psalm-baseline
 
 build:
 	@docker compose build
@@ -17,3 +17,9 @@ phpcbf:
 
 phpmd:
 	@docker compose run --rm php vendor/bin/phpmd /app/src/phpmd text /app/phpmd.xml
+
+psalm:
+	@docker compose run --rm php vendor/bin/psalm --no-progress --output-format=compact --show-info=false
+
+psalm-baseline:
+	@docker compose run --rm php vendor/bin/psalm --set-baseline=psalm-baseline.xml
