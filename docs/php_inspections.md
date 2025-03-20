@@ -32,78 +32,13 @@ PhpStorm PHP Inspections (EA Extended) – это мощный плагин дл
 - Быстрое исправление с помощью **Alt + Enter**.
 - Возможность игнорирования отдельных предупреждений через `@noinspection`.
 
-### Примеры найденных проблем
-#### 4.1 Неинициализированные переменные
-```php
-function test() {
-    echo $var; // PhpStorm Inspections: Undefined variable $var
-}
-```
+Вот пример кода с типичными ошибками:
 
-#### 4.2 Использование `==` вместо `===`
-```php
-if ($value == "123") { // PhpStorm Inspections: Possible type juggling issue
-    echo "Match found";
-}
-```
-Используйте строгое сравнение:
-```php
-if ($value === "123") {
-    echo "Match found";
-}
-```
+[Код с ошибками](../src/php_inspections/bad/BadExample.php)
 
-#### 4.3 Неиспользуемый код
-```php
-function unusedFunction() { // PhpStorm Inspections: Unused function
-    return 42;
-}
-```
+Открываем его в PhpStorm и смотрим, какие предупреждения выдаст плагин.
 
-#### 4.4 Избыточные вызовы функций
-```php
-for ($i = 0; $i < count($array); $i++) { // PhpStorm Inspections: count() is called in a loop
-    echo $array[$i];
-}
-```
-Рекомендация: сохранить значение `count($array)` в переменную перед циклом.
-
-#### 4.5 Устаревший код
-```php
-$fp = fopen("file.txt", "r"); // PhpStorm Inspections: Consider using modern file handling functions
-```
-Рекомендация: использовать `file_get_contents()` или `SplFileObject`.
-
-## 5. Запуск инспекций через CLI в CI/CD
-Плагин можно использовать в CI/CD, запуская инспекции через командную строку:
-```bash
-./bin/inspect.sh ~/project .idea/inspectionProfiles/Project.xml -v2 -o output.xml
-```
-
-## 6. Интеграция с GitHub Actions
-Пример workflow для автоматического запуска инспекций:
-```yaml
-name: PhpStorm Inspections
-
-on: [push, pull_request]
-
-jobs:
-  inspections:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-
-      - name: Run PhpStorm Inspections
-        run: ./bin/inspect.sh . .idea/inspectionProfiles/Project.xml -v2 -o output.xml
-```
-
-## 7. Преимущества и недостатки
+## 5. Преимущества и недостатки
 ### Преимущества
 - Глубокая интеграция с PhpStorm.
 - Расширенные проверки, которых нет в стандартных инспекциях IDE.
@@ -115,5 +50,13 @@ jobs:
 - Требуется PhpStorm, что может быть проблемой для headless-сред.
 - Не так детализирован, как Psalm или PHPStan.
 
-## 8. Заключение
-PhpStorm PHP Inspections – это мощный инструмент для статического анализа, который удобен в повседневной разработке и CI/CD. Однако, из-за возможных ограничений по производительности, его лучше использовать в сочетании с другими анализаторами, такими как Psalm или PHPStan.
+## Заключение
+
+Инструменты статического анализа кода помогают находить ошибки и потенциальные проблемы ещё до выполнения кода.
+Плагин PHP Inspections EA Extended отлично дополняет PhpStorm, указывая на избыточные конструкции, неоптимальный код и потенциальные баги прямо в процессе разработки.
+
+Однако его использование в CI/CD может быть не самым удобным решением. 
+В отличие от PHPCS, Psalm или PHPMD, этот плагин не предназначен для запуска в терминале и интеграции с пайплайнами. 
+Он нацелен именно на повышение качества кода во время написания, помогая разработчикам исправлять проблемы на ранних этапах.
+
+Поэтому лучшая стратегия — использовать PHP Inspections EA Extended в IDE для быстрого выявления проблем, а в CI/CD полагаться на инструменты, работающие в командной строке.
