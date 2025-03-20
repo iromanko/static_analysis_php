@@ -7,7 +7,7 @@ up:
 	@docker compose run --rm php bash
 
 down:
-	@docker compose down --volumes
+	@docker compose down --volumes --remove-orphans
 
 phpcs:
 	@docker compose run --rm php vendor/bin/phpcs /app/src/phpcs/
