@@ -16,9 +16,8 @@ class BadExample
             echo "Found!";
         }
 
-        // Потенциальный баг: isset() + доступ к массиву
-        if (isset($data['key']) && $data['key'] == 'value') {
-            echo "Key exists!";
+        if (array_search($what, $where, true) === false) {
+            /* some logic here */
         }
 
         return $result;
