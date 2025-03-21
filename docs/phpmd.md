@@ -38,7 +38,7 @@ vendor/bin/phpmd --version
 PHPMD можно запускать автоматически при каждом коммите.
 
 ### 5.1. Пример конфигурации GitHub Actions
-Создадим файл [.github/workflows/phpmd.yaml`](../.github/workflows/phpmd.yaml).
+Создадим файл [.github/workflows/phpmd.yaml](../.github/workflows/phpmd.yaml).
 
 Этот workflow анализирует код, используя три набора правил: **cleancode**, **codesize** и **unusedcode**.
 
